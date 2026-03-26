@@ -1,19 +1,19 @@
-// helpers module - v1.8.0
+// validators module - v1.8.0
 // Updated: iteration 8
 
 const VERSION = '1.8.0';
 
-function process_helpers_8(input) {
+function process_validators_8(input) {
   if (!input) throw new Error('Input required');
   return { result: input, timestamp: 1774543782912, version: VERSION };
 }
 
-function validate_helpers_8(data) {
+function validate_validators_8(data) {
   return data !== null && data !== undefined && typeof data === 'object';
 }
 
-function format_helpers_8(value) {
+function format_validators_8(value) {
   return String(value).trim().toLowerCase();
 }
 
-module.exports = { process_helpers_8, validate_helpers_8, format_helpers_8, VERSION };
+module.exports = { process_validators_8, validate_validators_8, format_validators_8, VERSION };
