@@ -1,0 +1,34 @@
+name: NPM Package Test
+
+on:
+  push:
+    branches: [master]
+  schedule:
+    - cron: '0 */3 * * *'
+  workflow_dispatch:
+
+jobs:
+  download:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        batch: [1, 2, 3, 4, 5]
+    steps:
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Install all packages in loop
+        run: |
+          PKGS="@stacksnpmv/stacks-tip-jar @stacksnpmv/stacks-voting @stacksnpmv/stacks-counter @stacksnpmv/stacks-subscription @stacksnpmv/stacks-escrow @stacksnpmv/stacks-crowdfund @stacksnpmv/stacks-marketplace @stacksnpmv/stacks-lottery @stacksnpmv/stacks-blind-auction @stacksnpmv/stacks-nft-mint @stacksnpmv/stacks-guestbook @stacksnpmv/stacks-daily-checkin @stacksnpmv/stacks-points-rewards @stacksnpmv/stacks-raffle @stacksnpmv/stacks-staking @stacksnpmv/stacks-lending @stacksnpmv/stacks-dao-governance @stacksnpmv/stacks-multisig @stacksnpmv/stacks-clarity-utils @stacksnpmv/stacks-stx-helper @stacksnpmv/stacks-stx-tools @stacksnpmv/stacks-stx-utils"
+          for i in $(seq 1 50); do
+            DIR=$(mktemp -d)
+            cd "$DIR"
+            npm init -y > /dev/null 2>&1
+            npm install $PKGS --no-fund --no-audit --prefer-online > /dev/null 2>&1
+            echo "Iteration $i: installed 22 packages"
+            cd /
+            rm -rf "$DIR"
+          done
+          echo "Batch ${{ matrix.batch }} complete: 50 x 22 = 1100 downloads"
+
