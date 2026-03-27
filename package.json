@@ -1,5 +1,5 @@
 {
-  "name": "stacks-multisig",
+  "name": "@stacksnpmv/stacks-multisig",
   "version": "1.0.0",
   "private": true,
   "scripts": {
